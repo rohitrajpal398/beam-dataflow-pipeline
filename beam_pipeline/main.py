@@ -30,9 +30,7 @@ def run():
                             schema='user_id:STRING, event_type:STRING, timestamp:TIMESTAMP',
                             write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND
                         )
-        )
-
-        
+        )    
 
 if __name__ == '__main__':
     run()
