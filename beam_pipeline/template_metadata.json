@@ -1,0 +1,5 @@
+{
+    "name": "User Activity Dataflow Pipeline",
+    "description": "Streams user activity from Pub/Sub to BigQuery",
+    "parameters": []
+  }  

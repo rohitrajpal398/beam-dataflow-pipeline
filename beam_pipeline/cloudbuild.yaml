@@ -1,0 +1,21 @@
+steps:
+  - name: 'python'
+    entrypoint: 'python3'
+    args: ['-m', 'pytest', 'tests/']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/user-activity-pipeline', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/user-activity-pipeline']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'dataflow', 'flex-template', 'build',
+        'gs://your-bucket/templates/user-activity-template.json',
+        '--image', 'gcr.io/$PROJECT_ID/user-activity-pipeline',
+        '--sdk-language', 'PYTHON',
+        '--flex-template-base-image', 'PYTHON',
+        '--metadata-file', 'template_metadata.json'
+      ]
